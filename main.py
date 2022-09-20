@@ -7,6 +7,11 @@ from time import strftime
 
 root = Tk()
 
+#root.overrideredirect(True)
+# root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(),
+#                                        root.winfo_screenheight()))
+
+
 root.attributes("-fullscreen", True)
 
 def times():
@@ -34,10 +39,10 @@ def times():
     # clock4.config(text=datime)
     # name.config(text="Slovakia")
 
-name1 = Label(root, text="Eugene OR", font=("times", 20, "bold"))
-name1.pack(side=RIGHT)
-clock1=Label(root, text="Eugene, OR, USA", font=("times", 25, "bold"))
-clock1.pack(side=RIGHT)
+name1 = Label(root, font=("times", 20, "bold"))
+name1.place(rely=.5, relx=.5)
+clock1=Label(root, font=("times", 25, "bold"))
+clock1.place(rely=0, relx=0)
 
 # name2 = Label(root, text="Eugene OR", font=("times", 20, "bold"))
 # name2.place(x=400,y=5)
