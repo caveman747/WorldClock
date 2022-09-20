@@ -6,20 +6,21 @@ from tkinter import *
 from time import strftime
 
 root = Tk()
-root.geometry("300x250")
+
+root.attributes("-fullscreen", True)
 
 def times():
     home = pytz.timezone("America/Los_Angeles")
     local_time=datetime.now(home)
     datime = local_time.strftime('%H:%M:%S %p')
-    clock.config(text=datime)
-    name.config(text="US")
+    clock1.config(text=datime)
+    name1.config(text="US")
 
-    home = pytz.timezone("America/Los_Angeles")
-    local_time=datetime.now(home)
-    datime = local_time.strftime('%H:%M:%S %p')
-    clock2.config(text=datime)
-    name.config(text="Italy")
+    # home = pytz.timezone("Europe/Rome")
+    # local_time=datetime.now(home)
+    # datime = local_time.strftime('%H:%M:%S %p')
+    # clock2.config(text=datime)
+    # name2.config(text="Italy")
 
     # home = pytz.timezone("America/Los_Angeles")
     # local_time=datetime.now(home)
@@ -33,15 +34,15 @@ def times():
     # clock4.config(text=datime)
     # name.config(text="Slovakia")
 
-name = Label(root, text="Eugene OR", font=("times", 20, "bold"))
-name.place(x=30,y=5)
-clock=Label(root, text="Eugene, OR, USA", font=("times", 25, "bold"))
-clock.place(x=10, y=40)
+name1 = Label(root, text="Eugene OR", font=("times", 20, "bold"))
+name1.pack(side=RIGHT)
+clock1=Label(root, text="Eugene, OR, USA", font=("times", 25, "bold"))
+clock1.pack(side=RIGHT)
 
-# name = Label(root, text="Eugene OR", font=("times", 20, "bold"))
-# name.place(x=200,y=80)
+# name2 = Label(root, text="Eugene OR", font=("times", 20, "bold"))
+# name2.place(x=400,y=5)
 # clock2=Label(root, text="Eugene, OR, USA", font=("times", 25, "bold"))
-# clock.place(x=200, y=80)
+# clock2.place(x=100, y=40)
 
 
 
