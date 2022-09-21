@@ -44,7 +44,7 @@ def times():
     # clock4.config(text=datime)
     # name.config(text="Slovakia")
 
-background_image=ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock /LockScreen-Eugene.png"))
+background_image=ImageTk.PhotoImage(Image.open("/home/itstats/WorldClock /LockScreen-Eugene.png"))
 background_label = Label(root, image=background_image)
 background_label.pack(fill=tkinter.BOTH)
 
