@@ -1,72 +1,57 @@
-# This is a sample Python script.
+#for GUI it's the rug that brings the room together
 import tkinter
+#used in converting pytz object into a "time" to be displayed
 from datetime import datetime
+#stands for python timezones, self explanatory
 import pytz
-from tkinter import *
-from time import strftime
-
+#modules responsible for pulling in images
 from PIL import ImageTk, Image
 
-root = Tk()
-
-#root.overrideredirect(True)
-# root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(),
-#                                        root.winfo_screenheight()))
-
-mycolor = '#%02x%02x%02x' % (2, 30, 110)  # set your favourite rgb color
-
-
+#creates a tkinter window object with fullscreen attributes
+root = tkinter.Tk()
 root.attributes("-fullscreen", True)
 
-def times():
-    home = pytz.timezone("America/Los_Angeles")
-    local_time=datetime.now(home)
-    datime = local_time.strftime('%H:%M:%S %p')
-    clock1.config(text=datime)
-    name1.config(text="Time in Eugene Oregon")
-    clock1.after(200, times)
+#datalogic color with slight alterations to better blend with background image
+mycolor = '#%02x%02x%02x' % (2, 30, 110)
 
-    # home = pytz.timezone("Europe/Rome")
-    # local_time=datetime.now(home)
-    # datime = local_time.strftime('%H:%M:%S %p')
-    # clock2.config(text=datime)
-    # name2.config(text="Italy")
+#directory locations of images used as background
+imageEugene = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-Eugene.png"))
+imageBologna = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-Bologna..png"))
+imageVietnam = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-Vietnam.png"))
 
-    # home = pytz.timezone("America/Los_Angeles")
-    # local_time=datetime.now(home)
-    # datime = local_time.strftime('%H:%M:%S %p')
-    # clock3.config(text=datime)
-    # name.config(text="Vietnam")
-    #
-    # home = pytz.timezone("America/Los_Angeles")
-    # local_time=datetime.now(home)
-    # datime = local_time.strftime('%H:%M:%S %p')
-    # clock4.config(text=datime)
-    # name.config(text="Slovakia")
+#creates list of directory locations for required images to iterate through
+imagelist = [imageEugene, imageBologna, imageVietnam]
 
-background_image=ImageTk.PhotoImage(Image.open("/home/itstats/WorldClock /LockScreen-Eugene.png"))
-background_label = Label(root, image=background_image)
+#creates pytz timezone objects
+tzEugene = pytz.timezone("America/Los_Angeles")
+tzBologna = pytz.timezone("Europe/Rome")
+tzVietnam = pytz.timezone("Asia/Ho_Chi_Minh")
+
+#creates list of pytz objects to iterate through
+timezonelist = [tzEugene, tzBologna, tzVietnam]
+
+
+def times(timezone, timezonelist, nextindex):
+    local_time=datetime.now(timezonelist[nextindex])
+    datime = local_time.strftime('%H:%M %p')
+    clock.config(text=datime)
+    name.config(text="Time in Eugene Oregon")
+    clock.after(60000, lambda: times(timezone, timezonelist, (nextindex+1) % len(imagelist)))
+
+def change_image(label, imagelist, nextindex):
+    background_label.configure(image=imagelist[nextindex])
+    root.after(60000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
+
+background_label = tkinter.Label(root)
 background_label.pack(fill=tkinter.BOTH)
 
-path = "/home/tester/PycharmProjects/WorldClock /DL-2.jpg"
-img = ImageTk.PhotoImage(Image.open(path))
-panel = Label(root, image = img, borderwidth=0, highlightthickness=0)
-panel.place(rely=.4, relx=.12)
+name = tkinter.Label(root, fg= "white", bg=mycolor, font=("calibri", 20, "bold"))
+name.place(rely=.85, relx=.15)
+clock = tkinter.Label(root, fg="white", bg=mycolor, font=("calibri", 25, "bold"))
+clock.place(rely=.9, relx=.15)
 
-name1 = Label(root, fg= "white", bg=mycolor, font=("calibri", 20, "bold"))
-name1.place(rely=.1, relx=.8)
-clock1=Label(root, fg="white", bg=mycolor, font=("calibri", 25, "bold"))
-clock1.place(rely=.2, relx=.8)
+times(clock, timezonelist, 0)
 
-# name2 = Label(root, font=("times", 20, "bold"))
-# name2.place(rely=.1, relx=.1)
-# clock2=Label(root, font=("times", 25, "bold"))
-# clock2.place(rely=.2, relx=.1)
-
-times()
+change_image(background_label, imagelist, 0)
 
 root.mainloop()
-
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
