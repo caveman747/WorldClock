@@ -30,28 +30,45 @@ tzVietnam = pytz.timezone("Asia/Ho_Chi_Minh")
 #creates list of pytz objects to iterate through
 timezonelist = [tzEugene, tzBologna, tzVietnam]
 
+nameEugene = "Eugene"
+nameMonteSanPietro = "Monte San Pietro?"
+nameHoChiMinhCity = "Ho Chi Minh City"
 
-def times(timezone, timezonelist, nextindex):
+nameList = [nameEugene, nameMonteSanPietro, nameHoChiMinhCity]
+
+
+#recursive function with no base case ripped from https://www.youtube.com/watch?v=zFCp7iczAPk and made recursive with help by looking at https://stackoverflow.com/questions/39025637/tkinter-changing-image-live-after-a-given-time
+#iterates over timezonelist and displays a different HH::MM UTC and description every minute - Eugene, Bologna, and Vietnam
+def times(timezone, timezonelist, nameList, nextindex):
     local_time=datetime.now(timezonelist[nextindex])
     datime = local_time.strftime('%H:%M %p')
     clock.config(text=datime)
-    name.config(text="Time in Eugene Oregon")
-    clock.after(60000, lambda: times(timezone, timezonelist, (nextindex+1) % len(imagelist)))
+    name.config(text=nameList[nextindex])
+    clock.after(60000, lambda: times(timezone, timezonelist,nameList, (nextindex+1) % len(imagelist)))
 
+#recursive function with no base case ripped from https://www.youtube.com/watch?v=zFCp7iczAPk and made recursive with help by looking at https://stackoverflow.com/questions/39025637/tkinter-changing-image-live-after-a-given-time
+#iterates over timezonelist and displays different images of these sites in the bottom right- Eugene, Bologna, and Vietnam
 def change_image(label, imagelist, nextindex):
     background_label.configure(image=imagelist[nextindex])
     root.after(60000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
 
+#gets the label configured in the function change_imaged
 background_label = tkinter.Label(root)
 background_label.pack(fill=tkinter.BOTH)
 
+#label configured in the function times
 name = tkinter.Label(root, fg= "white", bg=mycolor, font=("calibri", 20, "bold"))
 name.place(rely=.85, relx=.15)
+
+#clock configured in the function times
 clock = tkinter.Label(root, fg="white", bg=mycolor, font=("calibri", 25, "bold"))
 clock.place(rely=.9, relx=.15)
 
-times(clock, timezonelist, 0)
+#functional call parameters tkinter label, list of pytz timezones, list of site name strings, and starting index number
+times(clock, timezonelist, nameList, 0)
 
+#functional call parameters tkinter label, list of pytz timezones, list of site name strings, and starting index number
 change_image(background_label, imagelist, 0)
 
+#ends the tkinter loop - black magic that is alpha and omega for the tkinter object - root
 root.mainloop()
