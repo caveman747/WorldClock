@@ -16,7 +16,7 @@ mycolor = '#%02x%02x%02x' % (2, 30, 110)
 
 #directory locations of images used as background
 imageEugene = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-Eugene.png"))
-imageBologna = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-Bologna..png"))
+imageBologna = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-MonteSanPietro..png"))
 imageVietnam = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock2/LockScreen-Vietnam.png"))
 
 #creates list of directory locations for required images to iterate through
