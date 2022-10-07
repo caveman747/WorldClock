@@ -7,13 +7,12 @@ import pytz
 #modules responsible for pulling in images
 from PIL import ImageTk, Image
 
-
 #creates a tkinter window object with fullscreen attributes
 root = tkinter.Tk()
 root.attributes("-fullscreen", True)
 
 #datalogic color with slight alterations to better blend with background image
-mycolor = '#%02x%02x%02x' % (2, 30, 110)
+mycolor = '#%02x%02x%02x' % (15, 35, 110)
 
 #directory locations of images used as background
 imageEugene = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Eugene.png"))
@@ -31,9 +30,9 @@ tzVietnam = pytz.timezone("Asia/Ho_Chi_Minh")
 #creates list of pytz objects to iterate through
 timezonelist = [tzEugene, tzBologna, tzVietnam]
 
-nameEugene = "Eugene"
-nameMonteSanPietro = "Monte San Pietro"
-nameHoChiMinhCity = "Ho Chi Minh City"
+nameEugene = "Local Time in Eugene"
+nameMonteSanPietro = "Local Time in Bologna"
+nameHoChiMinhCity = "Local Time in Ho Chi Minh City"
 
 nameList = [nameEugene, nameMonteSanPietro, nameHoChiMinhCity]
 
@@ -42,7 +41,7 @@ nameList = [nameEugene, nameMonteSanPietro, nameHoChiMinhCity]
 def times(timezone, timezonelist, nameList, nextindex):
     name.config(text=nameList[nextindex])
     local_time=datetime.now(timezonelist[nextindex])
-    datime = local_time.strftime('%H:%M:%S %p')
+    datime = local_time.strftime('%H:%M')
     clock.config(text=datime)
     #recursive call
     clock.after(3000, lambda: times(timezone, timezonelist, nameList, (nextindex+1) % len(imagelist)))
@@ -54,18 +53,17 @@ def change_image(label, imagelist, nextindex):
     #recursive call
     root.after(3000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
 
-
 #gets the label configured in the function change_imaged
 background_label = tkinter.Label(root)
 background_label.pack(fill=tkinter.BOTH)
 
 #label configured in the function times
-name = tkinter.Label(root, fg= "white", bg=mycolor, font=("calibri", 20, "bold"))
-name.place(rely=.85, relx=.15)
+name = tkinter.Label(root, fg= "white", bg=mycolor, font=("helvetica", 21, "bold"))
+name.place(rely=.85, relx=.80)
 
 #clock configured in the function times
-clock = tkinter.Label(root, fg="white", bg=mycolor, font=("calibri", 25, "bold"))
-clock.place(rely=.9, relx=.15)
+clock = tkinter.Label(root, fg="white", bg=mycolor, font=("helvetica", 23, "bold"))
+clock.place(rely=.9, relx=.80)
 
 #functional call parameters tkinter label, list of pytz timezones, list of site name strings, and starting index number
 change_image(background_label, imagelist, 0)
