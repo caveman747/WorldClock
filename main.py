@@ -7,7 +7,6 @@ import pytz
 #modules responsible for pulling in images
 from PIL import ImageTk, Image
 
-import time
 
 #creates a tkinter window object with fullscreen attributes
 root = tkinter.Tk()
@@ -18,7 +17,7 @@ mycolor = '#%02x%02x%02x' % (2, 30, 110)
 
 #directory locations of images used as background
 imageEugene = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Eugene.png"))
-imageBologna = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-MonteSanPietro.png"))
+imageBologna = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Bologna.png"))
 imageVietnam = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Vietnam.png"))
 
 #creates list of directory locations for required images to iterate through
@@ -33,7 +32,7 @@ tzVietnam = pytz.timezone("Asia/Ho_Chi_Minh")
 timezonelist = [tzEugene, tzBologna, tzVietnam]
 
 nameEugene = "Eugene"
-nameMonteSanPietro = "Monte San Pietro?"
+nameMonteSanPietro = "Monte San Pietro"
 nameHoChiMinhCity = "Ho Chi Minh City"
 
 nameList = [nameEugene, nameMonteSanPietro, nameHoChiMinhCity]
@@ -41,22 +40,20 @@ nameList = [nameEugene, nameMonteSanPietro, nameHoChiMinhCity]
 #recursive function with no base case ripped from https://www.youtube.com/watch?v=zFCp7iczAPk and made recursive with help by looking at https://stackoverflow.com/questions/39025637/tkinter-changing-image-live-after-a-given-time
 #iterates over timezonelist and displays a different HH::MM UTC and description every minute - Eugene, Bologna, and Vietnam
 def times(timezone, timezonelist, nameList, nextindex):
-    t_end = time.time() + 60 * 15
     name.config(text=nameList[nextindex])
-    while time.time() < t_end:
-        local_time=datetime.now(timezonelist[nextindex])
-        datime = local_time.strftime('%H:%M:%S %p')
-        clock.config(text=datime)
-        root.update()
+    local_time=datetime.now(timezonelist[nextindex])
+    datime = local_time.strftime('%H:%M:%S %p')
+    clock.config(text=datime)
     #recursive call
-    clock.after(60000, lambda: times(timezone, timezonelist,nameList, (nextindex+1) % len(imagelist)))
+    clock.after(3000, lambda: times(timezone, timezonelist, nameList, (nextindex+1) % len(imagelist)))
 
 #recursive function with no base case ripped from https://www.youtube.com/watch?v=zFCp7iczAPk and made recursive with help by looking at https://stackoverflow.com/questions/39025637/tkinter-changing-image-live-after-a-given-time
 #iterates over timezonelist and displays different images of these sites in the bottom right- Eugene, Bologna, and Vietnam
 def change_image(label, imagelist, nextindex):
     background_label.configure(image=imagelist[nextindex])
     #recursive call
-    root.after(60000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
+    root.after(3000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
+
 
 #gets the label configured in the function change_imaged
 background_label = tkinter.Label(root)
