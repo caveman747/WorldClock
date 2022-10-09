@@ -15,9 +15,9 @@ root.attributes("-fullscreen", True)
 mycolor = '#%02x%02x%02x' % (15, 35, 110)
 
 #directory locations of images used as background
-imageEugene = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Eugene.png"))
-imageBologna = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Bologna.png"))
-imageVietnam = ImageTk.PhotoImage(Image.open("/home/tester/PycharmProjects/WorldClock/LockScreen-Vietnam.png"))
+imageEugene = ImageTk.PhotoImage(Image.open("/home/itstats/WorldClock/LockScreen-Eugene.png"))
+imageBologna = ImageTk.PhotoImage(Image.open("/home/itstats/WorldClock/LockScreen-Bologna.png"))
+imageVietnam = ImageTk.PhotoImage(Image.open("/home/itstats/WorldClock/LockScreen-Vietnam.png"))
 
 #creates list of directory locations for required images to iterate through
 imagelist = [imageEugene, imageBologna, imageVietnam]
@@ -44,14 +44,14 @@ def times(timezone, timezonelist, nameList, nextindex):
     datime = local_time.strftime('%H:%M')
     clock.config(text=datime)
     #recursive call
-    clock.after(3000, lambda: times(timezone, timezonelist, nameList, (nextindex+1) % len(imagelist)))
+    clock.after(60000, lambda: times(timezone, timezonelist, nameList, (nextindex+1) % len(imagelist)))
 
 #recursive function with no base case ripped from https://www.youtube.com/watch?v=zFCp7iczAPk and made recursive with help by looking at https://stackoverflow.com/questions/39025637/tkinter-changing-image-live-after-a-given-time
 #iterates over timezonelist and displays different images of these sites in the bottom right- Eugene, Bologna, and Vietnam
 def change_image(label, imagelist, nextindex):
     background_label.configure(image=imagelist[nextindex])
     #recursive call
-    root.after(3000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
+    root.after(60000, lambda: change_image(label, imagelist, (nextindex+1) % len(imagelist)))
 
 #gets the label configured in the function change_imaged
 background_label = tkinter.Label(root)
